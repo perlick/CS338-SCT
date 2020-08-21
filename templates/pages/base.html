@@ -1,12 +1,44 @@
 <html>
 <head>
-	{% if title %}
-	<title>{{ title }}</title>
-	{% else %}
-	<title>SCT</title>
-	{% endif %}
+	<title>{{ data.title }}</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+	<script src="{{ url_for('static', filename='js/global.js') }}"></script>
 </head>
 <body>
+	<div id="header">
+		{% if data.menu %}
+			<i onclick="toggleNav()" class="fas fa-bars"></i>
+		{% else %}
+			<a href="{{ url_for('pages.pages_home') }}">
+				<i class="fas fa-chevron-left"></i>
+			</a>
+		{% endif %}
+		<h1>{{ data.title }}</h1>
+	</div>
+	<div id="sidenav">
+		<a href="{{ url_for('pages.pages_locations') }}">My Locations</a>
+		<a href="{{ url_for('pages.pages_testReports') }}">My Test Reports</a>
+		<a href="{{ url_for('pages.pages_exposureHistory') }}">My Exposure History</a>
+		<a href="{{ url_for('pages.pages_familyManager') }}">My Family manager</a>
+		<a href="{{ url_for('pages.pages_communityExposures') }}">Community Exposures</a>
+		<a href="{{ url_for('pages.pages_settings') }}">Settings</a>
+	</div>
 	{% block content %}{% endblock %}
+	<div id="tabs">
+		<a href="{{ url_for('pages.pages_locations') }}">
+			<i class="fa fa-map-pin" aria-hidden="true"></i>
+		</a>
+		<a href="{{ url_for('pages.pages_testReports') }}">
+			<i class="fa fa-list-alt" aria-hidden="true"></i>
+		</a>
+		<a href="{{ url_for('pages.pages_familyManager') }}">
+			<i class="fa fa-users" aria-hidden="true"></i>
+		</a>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

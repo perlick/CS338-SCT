@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, redirect, url_for
 from api import api
 from pages import pages
 
@@ -9,7 +9,7 @@ app.register_blueprint(pages, url_prefix='/')
 
 @app.route('/')
 def index():
-	return render_template('pages/home.html')
+	return redirect(url_for('pages.pages_home'))
 
 @app.teardown_appcontext
 def close_connection(exception):
