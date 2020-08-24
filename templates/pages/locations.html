@@ -1,5 +1,40 @@
 {% extends "pages/base.html" %}
 
 {% block content %}
-Locations
+<h2>New Location</h2>
+<form action="{{ url_for('api.api_add_visit') }}" method="post">
+	<label for="person">Family Member: </label>
+	<select name="person" required>
+		{% for person in data.members %}
+			<option value="{{ person[0] }}">{{ person[2] }} {{ person[3] }}</option>
+		{% endfor %}
+	</select><br>
+
+	<label for="location">Location: </label>
+	<select name="location" required>
+		{% for loc in data.locations %}
+			<option value="{{ loc[0] }}">{{ loc[1] }}</option>
+		{% endfor %}
+	</select><br>
+
+	<label for="date">Date: </label>
+	<input type="date" name="date" required><br>
+
+	<label for="time">Time: </label>
+	<input type="time" name="time" required><br>
+
+	<label for="hours">Duration: </label>
+	<input type="number" name="hours" required> hours <input type="number" name="minutes" required> minutes<br>
+
+	<button type="submit">Add</button>
+</form>
+<hr>
+<h2>History</h2>
+{% for visit in data.visits %}
+	<form action="{{ url_for('api.api_delete_visit') }}" method="post">
+		{{ visit[2] }} {{ visit[3] }} was at {{ visit[11] }} for {{ visit[9] }} minutes on {{ visit[7] }} at {{visit[8]}}
+		<input type="hidden" name="id" value="{{ visit[4] }}">
+		<button type="submit">Delete</button><br>
+	</form>
+{% endfor %}
 {% endblock %}

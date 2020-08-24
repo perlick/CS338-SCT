@@ -7,11 +7,9 @@ auth = Blueprint('auth', __name__)
 @auth.route('/')
 @auth.route('/login', methods=['GET', 'POST'])
 def auth_login():
-	print("login")
 	if request.method == 'POST':
 		username = request.form['username']
 		res = db.get_db().query("select * from users where username='" + username + "'")
-		print(res)
 		if len(res) == 1 and request.form['password'] == res[0][2]:
 			user = User(res[0][0], res[0][1])
 			flask_login.login_user(user)
@@ -20,7 +18,6 @@ def auth_login():
 
 @auth.route('/logout')
 def auth_logout():
-	print("logout")
 	session.pop('username', None)
 	return redirect(url_for('pages.pages_home'))
 

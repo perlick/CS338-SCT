@@ -16,6 +16,7 @@ class Database:
 	def query(self, sql, parameters=[]):
 		c = self.conn.cursor()
 		c.execute(sql, parameters)
+		self.conn.commit()
 		return c.fetchall()
 
 	def close(self):

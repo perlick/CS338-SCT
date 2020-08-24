@@ -1,5 +1,36 @@
 {% extends "pages/base.html" %}
 
 {% block content %}
-Test Reports
+<h2>Test Reports</h2>
+<form action="{{ url_for('api.api_add_test') }}" method="post">
+	<label for="person">Family Member: </label>
+	<select name="person" required>
+		{% for person in data.members %}
+		<option value="{{ person[0] }}">{{ person[2] }} {{ person[3] }}</option>
+		{% endfor %}
+	</select><br>
+
+	<label for="date">Date: </label>
+	<input type="date" name="date" required><br>
+
+	<label for="time">Time: </label>
+	<input type="time" name="time" required><br>
+
+	<label for="result">Result: </label>
+	<select name="result">
+		<option value="0">Negative</option>
+		<option value="1">Positive</option>
+	</select>
+
+	<button type="submit">Add</button>
+</form>
+<hr>
+<h2>History</h2>
+{% for test in data.tests %}
+<form action="{{ url_for('api.api_delete_test') }}" method="post">
+	{{ test[2] }} {{ test[3] }} tested {{ "positive" if test[8]==1 else "negative" }} on {{ test[6] }} at {{ test[7] }}
+	<input type="hidden" name="id" value="{{ test[4] }}">
+	<button type="submit">Delete</button><br>
+</form>
+{% endfor %}
 {% endblock %}

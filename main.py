@@ -31,7 +31,6 @@ def close_connection(exception):
 
 @login_manager.user_loader
 def load_user(id):
-	print("laod_user")
 	res = db.get_db().query("select * from users where id='" + str(id) + "'")
 	if len(res) == 1:
 		user = User(res[0][0], res[0][1]) 
@@ -42,7 +41,6 @@ def load_user(id):
 
 @login_manager.request_loader
 def request_loader(request):
-	print("request laoder")
 	username = request.form.get('username')
 	res = db.get_db().query("select * from users where username='" + str(username) + "'")
 	if len(res) == 1:
@@ -53,7 +51,6 @@ def request_loader(request):
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-	print("unauth Handler")
 	return redirect(url_for('auth.auth_login'))
 
 if __name__ == "__main__":
