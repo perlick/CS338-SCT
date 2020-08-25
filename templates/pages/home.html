@@ -1,7 +1,22 @@
 {% extends "pages/base.html" %}
 
 {% block content %}
+<span style="float: right; margin-right: 5px;">logged in as: {{data.username}}</span>
 <h2>Today's Family Status</h2>
-{{ data.id }}
-{{ data.username }}
+{% for person in data.status %}
+	{{ person.name }}:
+	{% if person.status == 1 %}
+		<span style="color: red">Tested Positive</span>
+	{% else %}
+		{% if person.num_infected > 0 %}
+			<span style="color: yellow">Potentally Exposed</span>
+		{% else %}
+			<span style="color: blue">Clear</span>
+		{% endif %}
+	{% endif %}
+{% endfor %}
+<h2>Today's Locations</h2>
+{% for visit in data.locations %}
+	{{visit[0]}} {{visit[1]}} was at {{ visit[2] }} at {{ visit[3] }}<br>
+{% endfor %}
 {% endblock %}

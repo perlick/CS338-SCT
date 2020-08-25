@@ -1,5 +1,8 @@
 {% extends "pages/base.html" %}
 
 {% block content %}
-Community Exposures
+<h2>Community Exposures</h2>
+{% for stat in data.statuses %}
+	{{ stat[6] }} is currently positive for COVID-19 
+{% endfor %}
 {% endblock %}
