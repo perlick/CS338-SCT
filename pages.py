@@ -48,7 +48,7 @@ def pages_home():
 					where person_id={o_person[0]} 
 					and timestamp<{visit[1]}
 					order by timestamp DESC limit 1""")
-				if stat[0][0]==1:
+				if len(stat)>0 and stat[0][0]==1:
 					infected = infected + 1
 				else:
 					clear = clear + 1
@@ -172,7 +172,7 @@ def pages_exposureHistory():
 					where person_id={o_person[0]} 
 					and timestamp<{visit[1]}
 					order by timestamp DESC limit 1""")
-				if stat[0][0]==1:
+				if len(stat)>0 and stat[0][0]==1:
 					infected = infected + 1
 				else:
 					clear = clear + 1

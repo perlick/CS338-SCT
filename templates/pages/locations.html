@@ -3,38 +3,59 @@
 {% block content %}
 <h2>New Location</h2>
 <form action="{{ url_for('api.api_add_visit') }}" method="post">
-	<label for="person">Family Member: </label>
-	<select name="person" required>
-		{% for person in data.members %}
-			<option value="{{ person[0] }}">{{ person[2] }} {{ person[3] }}</option>
-		{% endfor %}
-	</select><br>
-
-	<label for="location">Location: </label>
-	<select name="location" required>
-		{% for loc in data.locations %}
-			<option value="{{ loc[0] }}">{{ loc[1] }}</option>
-		{% endfor %}
-	</select><br>
-
-	<label for="date">Date: </label>
-	<input type="date" name="date" required><br>
-
-	<label for="time">Time: </label>
-	<input type="time" name="time" required><br>
-
-	<label for="hours">Duration: </label>
-	<input type="number" name="hours" required> hours <input type="number" name="minutes" required> minutes<br>
-
-	<button type="submit">Add</button>
+	<div class="form-group row">
+		<label for="person" class="col col-form-label-sm">Family Member: </label>
+		<div class="col">
+			<select class="form-control form-control-sm" name="person" required>
+				{% for person in data.members %}
+				<option value="{{ person[0] }}">{{ person[2] }} {{ person[3] }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="location" class="col col-form-label col-form-label-sm">Location: </label>
+		<div class="col">
+			<select class="form-control form-control-sm" name="location" required>
+				{% for loc in data.locations %}
+				<option value="{{ loc[0] }}">{{ loc[1] }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="date" class="col col-form-label col-form-label-sm">Date: </label>
+		<div class="col">
+			<input class="form-control form-control-sm" type="date" name="date" required>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="time" class="col col-form-label col-form-label-sm">Time: </label>
+		<div class="col">
+			<input class="form-control form-control-sm" type="time" name="time" required>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="hours" class="col col-form-label col-form-label-sm">Duration: </label>
+		<div class="col">
+			<input class="form-control form-control-sm" type="number" name="hours" placeholder="hours" required>
+			<input class="form-control form-control-sm" type="number" name="minutes" placeholder="minutes" required>
+		</div>
+	</div>
+	<button type="submit" class="btn btn-primary form-group">Submit</button>
 </form>
 <hr>
 <h2>History</h2>
-{% for visit in data.visits %}
-	<form action="{{ url_for('api.api_delete_visit') }}" method="post">
-		{{ visit[2] }} {{ visit[3] }} was at {{ visit[11] }} for {{ visit[9] }} minutes on {{ visit[7] }} at {{visit[8]}}
-		<input type="hidden" name="id" value="{{ visit[4] }}">
-		<button type="submit">Delete</button><br>
-	</form>
-{% endfor %}
+<div class="list-group">
+	{% for visit in data.visits %}
+		<form action="{{ url_for('api.api_delete_visit') }}" method="post" class="list-group-item">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">{{ visit[2] }} {{ visit[3] }}</h5>
+				<small>{{ visit[7] }} {{visit[8]}}</small>
+			</div>
+			 went to {{ visit[11] }} for {{ visit[9] }} minutes.
+			<input type="hidden" name="id" value="{{ visit[4] }}">
+			<button type="submit" class="btn btn-danger" style="float: right;">Delete</button>
+		</form>
+	{% endfor %}
 {% endblock %}

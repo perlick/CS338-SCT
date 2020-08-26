@@ -3,34 +3,53 @@
 {% block content %}
 <h2>Test Reports</h2>
 <form action="{{ url_for('api.api_add_test') }}" method="post">
-	<label for="person">Family Member: </label>
-	<select name="person" required>
-		{% for person in data.members %}
-		<option value="{{ person[0] }}">{{ person[2] }} {{ person[3] }}</option>
-		{% endfor %}
-	</select><br>
+	<div class="form-group row">
+		<label for="person" class="col col-form-label-sm">Family Member: </label>
+		<div class="col">
+			<select class="form-control form-control-sm" name="person" required>
+				{% for person in data.members %}
+				<option value="{{ person[0] }}">{{ person[2] }} {{ person[3] }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="date" class="col col-form-label col-form-label-sm">Date: </label>
+		<div class="col">
+			<input class="form-control form-control-sm" type="date" name="date" required>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="time" class="col col-form-label col-form-label-sm">Time: </label>
+		<div class="col">
+			<input class="form-control form-control-sm" type="time" name="time" required>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label for="result" class="col col-form-label col-form-label-sm">Result: </label>
+		<div class="col">
+			<select name="result" class="form-control form-control-sm">
+				<option value="0">Negative</option>
+				<option value="1">Positive</option>
+			</select>
+		</div>
+	</div>
 
-	<label for="date">Date: </label>
-	<input type="date" name="date" required><br>
-
-	<label for="time">Time: </label>
-	<input type="time" name="time" required><br>
-
-	<label for="result">Result: </label>
-	<select name="result">
-		<option value="0">Negative</option>
-		<option value="1">Positive</option>
-	</select>
-
-	<button type="submit">Add</button>
+	<button type="submit" class="btn btn-primary form-group">Submit</button>
 </form>
 <hr>
 <h2>History</h2>
-{% for test in data.tests %}
-<form action="{{ url_for('api.api_delete_test') }}" method="post">
-	{{ test[2] }} {{ test[3] }} tested {{ "positive" if test[8]==1 else "negative" }} on {{ test[6] }} at {{ test[7] }}
-	<input type="hidden" name="id" value="{{ test[4] }}">
-	<button type="submit">Delete</button><br>
-</form>
-{% endfor %}
+<div class="list-group">
+	{% for test in data.tests %}
+	<form action="{{ url_for('api.api_delete_test') }}" method="post" class="list-group-item">
+		<div class="d-flex w-100 justify-content-between">
+			<h5 class="mb-1">{{ test[2] }} {{ test[3] }}</h5>
+			<small>{{ test[6] }} {{test[7]}}</small>
+		</div>
+		Tested {{ "positive" if test[8]==1 else "negative" }}
+		<input type="hidden" name="id" value="{{ test[4] }}">
+		<button type="submit" class="btn btn-danger" style="float: right;">Delete</button>
+	</form>
+	{% endfor %}
+</div>
 {% endblock %}

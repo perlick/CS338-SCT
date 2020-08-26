@@ -3,21 +3,31 @@
 {% block content %}
 <h2>New member</h2>
 <form action="{{ url_for('api.api_add_member') }}" method="post">
-	<label for="firt"><b>First Name</b></label>
-	<input type="text" placeholder="Jane" name="first" required><br>
+	<div class="form-group row">
+		<label for="first" class="col col-form-label-sm">First Name</label>
+		<div class="col">
+			<input type="text" class="form-control form-control-sm" placeholder="First" name="first" required>
+		</div>
+	</div>
 	
-	<label for="last"><b>Last Name</b></label>
-	<input type="text" placeholder="Doe" name="last" required><br>
+	<div class="form-group row">
+		<label for="last" class="col col-form-label-sm">Last Name</label>
+		<div class="col">
+			<input type="text" class="form-control form-control-sm" placeholder="Last" name="last" required>
+		</div>
+	</div>
 	
-	<button type="submit">Add</button>
+	<button type="submit" class="btn btn-primary form-group">Submit</button>
 </form>
 <hr>
 <h2>Members</h2>
-{% for person in data.members %}
-	<form action="{{ url_for('api.api_delete_member') }}" method="post">
-		{{ person[2] }} {{ person[3] }} 
-		<input type="hidden" name="id" value="{{ person[0] }}">
-		<button type="submit">Delete</button><br>
-	</form>
-{% endfor %}
+<ul class="list-group">
+	{% for person in data.members %}
+		<form action="{{ url_for('api.api_delete_member') }}" method="post" class="list-group-item">
+			<button type="submit" class="btn btn-danger" style="float: right;">Delete</button>
+			<h5 class="mb-1"> {{ person[2] }} {{ person[3] }} </h5>
+			<input type="hidden" name="id" value="{{ person[0] }}">
+		</form>
+	{% endfor %}
+</ul>
 {% endblock %}

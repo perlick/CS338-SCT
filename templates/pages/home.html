@@ -1,22 +1,32 @@
 {% extends "pages/base.html" %}
 
 {% block content %}
-<span style="float: right; margin-right: 5px;">logged in as: {{data.username}}</span>
+<div class="jumbotron">
+	<h1 class="display-4">Welcome, {{current_user.username}}.</h1>
+	<p class="lead">Let us know where you've been recently!</p>
+	<a class="btn btn-primary btn-lg" href="{{ url_for('pages.pages_locations') }}" role="button">Add Locations</a>
+</div>
 <h2>Today's Family Status</h2>
+<ul class="list-group">
 {% for person in data.status %}
-	{{ person.name }}:
 	{% if person.status == 1 %}
-		<span style="color: red">Tested Positive</span>
+		<li class="list-group-item list-group-item-danger">{{ person.name }}: Confirmed Exposed</li>
 	{% else %}
 		{% if person.num_infected > 0 %}
-			<span style="color: yellow">Potentally Exposed</span>
+			<li class="list-group-item list-group-item-warning">{{ person.name }}: At Risk</li>
 		{% else %}
-			<span style="color: blue">Clear</span>
+			<li class="list-group-item list-group-item-primary">{{ person.name }}: Clear</li>
 		{% endif %}
 	{% endif %}
 {% endfor %}
+</ul>
+<hr>
 <h2>Today's Locations</h2>
+<ul class="list-group">
 {% for visit in data.locations %}
-	{{visit[0]}} {{visit[1]}} was at {{ visit[2] }} at {{ visit[3] }}<br>
+	<li class="list-group-item">
+		{{visit[0]}} {{visit[1]}} was at {{ visit[2] }} at {{ visit[3] }}
+	</li>
 {% endfor %}
+</ul>
 {% endblock %}

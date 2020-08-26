@@ -2,9 +2,17 @@
 
 {% block content %}
 <h2>Exposure History</h2>
-{% for person in data.status %}
-    {{ person.name }} visited {{ person.num_visits }} location(s) and had {{ person.num_infected }} interaction(s) with
-    people who tested positive and {{ person.num_other }} interaction(s) with others
-    in the last 14 days.<br>
-{% endfor %}
+<div class="list-group">
+	{% for person in data.status %}
+		<div class="list-group-item">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">{{ person.name }}</h5>
+				<small>last 14 days</small>
+			</div>
+			Locations: {{ person.num_visits }} <br>
+			Total interactions: {{ person.num_infected + person.num_other }}<br>
+			COVID interactions: {{ person.num_infected }}
+		</div>
+	{% endfor %}
+</div>
 {% endblock %}

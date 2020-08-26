@@ -44,7 +44,7 @@ def request_loader(request):
 	username = request.form.get('username')
 	res = db.get_db().query("select * from users where username='" + str(username) + "'")
 	if len(res) == 1:
-		user = User(res[0]['id'], res[0][1])
+		user = User(res[0][0], res[0][1])
 		return user
 	else:
 		return None
@@ -54,4 +54,4 @@ def unauthorized_handler():
 	return redirect(url_for('auth.auth_login'))
 
 if __name__ == "__main__":
-	app.run(host='127.0.0.1', port=8080, debug=True)
+	app.run(host='0.0.0.0', port=5000, debug=True)
